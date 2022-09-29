@@ -5,41 +5,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace CurrencyExchange.Service.Controllers
 {
     [ApiController]
-    [Route("[action]")]
+    [Route("currency")]
     public class CurrencyExchangeController : ControllerBase
     {
-
+        private readonly ICurrencyProvider _currencyProvider;
+        private readonly IExchangeBureau _bureau;
         private readonly ILogger<CurrencyExchangeController> _logger;
 
-        public CurrencyExchangeController(ILogger<CurrencyExchangeController> logger)
+        public CurrencyExchangeController(ICurrencyProvider currencyProvider, IExchangeBureau bureau, ILogger<CurrencyExchangeController> logger)
         {
+            _currencyProvider = currencyProvider;
+            _bureau = bureau;
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetCurrencies")]
-        public IEnumerable<CurrencyDTO> GetCurrencyList()
+        [Route("")]
+        [HttpGet()]
+        public IList<CurrencyDTO> GetCurrencyList()
         {
-            // TODO: Switch to using Model as opposed to hardcoded list here
-
-            return new List<CurrencyDTO>()
-            {
-                new CurrencyDTO("GBP", "British Pounds"),
-                new CurrencyDTO("USD", "US Dollars")
-            };
+            var currencyList = _currencyProvider.All().ToList().ConvertAll<CurrencyDTO>(c => new CurrencyDTO(c));
+            return currencyList;
         }
 
-        [HttpGet(Name = "ConvertMoney")]
-        public Money Exchange(string from, decimal value, string to)
+        [Route("exchange")]
+        [HttpGet()]
+        public ExchangeCardDTO Exchange(string from, decimal value, string to)
         {
-            // TODO: Validate Currency To and From exists
-
-            // TODO: Return Exchange Result is Exchange Successful
-
-            // TODO: Return appropriate HTTP response is exchange unsuccessful
-
-
-            // TODO: Switch to using Model when created: Simply get a result for NOW
-            return new Money(100.02M, "GBP");
+            var exchangeResult = _bureau.Exchange(new Money(value, from), to);
+            return new ExchangeCardDTO(exchangeResult);
         }
     }
 }

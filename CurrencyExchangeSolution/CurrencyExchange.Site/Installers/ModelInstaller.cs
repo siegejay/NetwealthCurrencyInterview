@@ -1,7 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor;
-using ExchangeEngine;
+using Castle.Windsor;using ExchangeBureau;
 
 namespace CurrencyExchange.Site.Installers
 {
@@ -9,16 +8,6 @@ namespace CurrencyExchange.Site.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-
-            //var service = new CurrencyExchangeApi( ["ExchangeServiceUri"])
-            //var serviceConfig = container.Resolve<ExchangeServiceConfiguration>();
-
-            //container.Register(Component
-            //    .For<CurrencyExchangeApi>()
-            //    .ImplementedBy<CurrencyExchangeApi>()
-            //    .DependsOn(Dependency.OnValue("")
-            //    .LifestyleSingleton
-            //    )
 
             //throw new NotImplementedException();
         }

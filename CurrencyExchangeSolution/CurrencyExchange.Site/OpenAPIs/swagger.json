@@ -1,16 +1,15 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "CurrencyExchangeService",
+    "title": "CurrencyExchange.Service",
     "version": "1.0"
   },
   "paths": {
-    "/GetCurrencyList": {
+    "/currency": {
       "get": {
         "tags": [
           "CurrencyExchange"
         ],
-        "operationId": "GetCurrencies",
         "responses": {
           "200": {
             "description": "Success",
@@ -44,12 +43,11 @@
         }
       }
     },
-    "/Exchange": {
+    "/currency/exchange": {
       "get": {
         "tags": [
           "CurrencyExchange"
         ],
-        "operationId": "ConvertMoney",
         "parameters": [
           {
             "name": "from",
@@ -80,17 +78,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Money"
+                  "$ref": "#/components/schemas/ExchangeCardDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Money"
+                  "$ref": "#/components/schemas/ExchangeCardDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Money"
+                  "$ref": "#/components/schemas/ExchangeCardDTO"
                 }
               }
             }
@@ -115,13 +113,35 @@
         },
         "additionalProperties": false
       },
-      "Money": {
+      "ExchangeCardDTO": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "$ref": "#/components/schemas/MoneyDTO"
+          },
+          "to": {
+            "$ref": "#/components/schemas/MoneyDTO"
+          },
+          "rateApplied": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "readOnly": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MoneyDTO": {
         "type": "object",
         "properties": {
           "currencyCode": {
             "type": "string",
-            "nullable": true,
-            "readOnly": true
+            "nullable": true
           },
           "value": {
             "type": "number",

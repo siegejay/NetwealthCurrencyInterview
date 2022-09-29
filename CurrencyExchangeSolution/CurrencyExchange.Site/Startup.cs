@@ -1,7 +1,7 @@
 ﻿using Castle.Windsor.Installer;
 using Castle.Windsor;
 using System.Reflection;
-using ExchangeEngine;
+using ExchangeBureau;
 
 namespace CurrencyExchange.Site
 {
@@ -25,7 +25,7 @@ namespace CurrencyExchange.Site
 
             // Register Service Clients into Services Collection 
             // TODO: Look at ways to do this in WindsorInstallers
-            services.AddHttpClient<ICurrencyExchangeApi, CurrencyExchangeApi>(
+            services.AddHttpClient<ICurrencyExchangeClient, CurrencyExchangeClient>(
                 (provider, client) => {
                     client.BaseAddress = new Uri(_configuration.GetValue("ExchangeService:RootUri", "https://localhost:7061/"));
                 });

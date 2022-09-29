@@ -1,5 +1,5 @@
 ﻿using CurrencyExchange.Site.Models;
-using ExchangeEngine;
+using ExchangeBureau;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,9 +8,9 @@ namespace CurrencyExchange.Site.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICurrencyExchangeApi _exchangeService;
+        private readonly ICurrencyExchangeClient _exchangeService;
 
-        public HomeController(ILogger<HomeController> logger, ICurrencyExchangeApi exchangeService)
+        public HomeController(ILogger<HomeController> logger, ICurrencyExchangeClient exchangeService)
         {
             _logger = logger;
             _exchangeService = exchangeService;
@@ -20,7 +20,7 @@ namespace CurrencyExchange.Site.Controllers
         public async Task<IActionResult> Index(string fromCode = "GBP", decimal value = 0M, string toCode = "USD", decimal? exchangedValue = null)
         {
             // Get list of Currencies
-            var currencyList = await _exchangeService.GetCurrenciesAsync();
+            var currencyList = await _exchangeService.CurrencyAsync();
             var viewModel = new HomeViewModel(currencyList.ToList());
             viewModel.ExchangeFromCode = fromCode;
             viewModel.ExchangeToCode = toCode;
@@ -33,7 +33,7 @@ namespace CurrencyExchange.Site.Controllers
         public async Task<IActionResult> CalculateExchangeValue(string exchangeFromCode, decimal fromValue, string exchangeToCode)
         {
             // Get Exchange Value from the service
-            var exchangeValue = await _exchangeService.ConvertMoneyAsync(exchangeFromCode, (double)fromValue, exchangeToCode);
+            var exchangeValue = await _exchangeService.ExchangeAsync(exchangeFromCode, (double)fromValue, exchangeToCode);
 
             // TODO: Handle errors
 
@@ -41,13 +41,8 @@ namespace CurrencyExchange.Site.Controllers
                 {"fromCode", exchangeFromCode },
                 {"toCode", exchangeToCode },
                 {"value", fromValue },
-                {"exchangedValue", exchangeValue.Value }
+                {"exchangedValue", exchangeValue.To.Value }
             });
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

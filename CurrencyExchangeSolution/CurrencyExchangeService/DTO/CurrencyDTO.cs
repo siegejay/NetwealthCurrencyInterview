@@ -7,7 +7,6 @@ namespace CurrencyExchange.Service.DTO
 
     public class CurrencyDTO
     {
-
         public CurrencyDTO(ICurrency currency)
         {
             Code = currency.CurrencyCode;

@@ -1,6 +1,6 @@
 ﻿namespace CurrencyExchange.Model
 {
-    internal interface IExchangeRate
+    public interface IExchangeRate
     {
         string From { get;}
         string To { get; }

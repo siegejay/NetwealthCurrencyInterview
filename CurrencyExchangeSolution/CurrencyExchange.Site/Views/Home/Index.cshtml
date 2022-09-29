@@ -7,7 +7,7 @@
     <h1 class="display-4">Welcome</h1>
 
     <div>
-    @foreach (var currency in Model.Currencies)
+    @foreach (var currency in Model.CurrenciesList)
     {
         <p>@currency.Name - @currency.Code</p>
     }
@@ -17,9 +17,9 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.TextBoxFor(model => model.ExchangeFromCode)
+        @Html.DropDownListFor(model=> model.ExchangeFromCode, @Model.MakeExchangeFromSelectList())
         @Html.EditorFor(model => model.FromValue)
-        @Html.TextBoxFor(model => model.ExchangeToCode)
+        @Html.DropDownListFor(model=> model.ExchangeToCode, @Model.MakeExchangeToSelectList())
         
         <button type="submit">Calculate</button> 
 
@@ -27,6 +27,4 @@
             Exchange Value: @Model.ToValue
         </div>
     }
-
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

@@ -4,33 +4,23 @@ namespace CurrencyExchange.Service
     {
         public static void Main(string[] args)
         {
+            //TODO: Clean up and sort out the program\startup split
+
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Explicitly instantiate the DI Container
+            var container = new Castle.Windsor.WindsorContainer();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // Register the Container in place of the internal DI system
+            builder.Host.UseWindsorContainerServiceProvider(container);
 
+            // Register Services
+            var startup = new Startup();
+            startup.ConfigureServices(builder.Services, container);
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-
-            // For demo purposes make the swagger interface available on all environments
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            //}
+            startup.Configure(app);
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
             app.Run();
         }
     }
