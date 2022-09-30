@@ -1,6 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
-using Castle.Windsor;using ExchangeBureau;
+using Castle.Windsor;
 
 namespace CurrencyExchange.Site.Installers
 {
@@ -9,7 +9,6 @@ namespace CurrencyExchange.Site.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
 
-            //throw new NotImplementedException();
         }
     }
 }

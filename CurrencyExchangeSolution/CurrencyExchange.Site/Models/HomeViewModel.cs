@@ -21,7 +21,7 @@ namespace CurrencyExchange.Site.Models
                 var listItems = new List<SelectListItem>();
                 foreach(var item in CurrenciesList)
                 {
-                    listItems.Add(new SelectListItem(item.Name, 
+                    listItems.Add(new SelectListItem($"{item.Name} - {item.Code}", 
                         item.Code, 
                         ExchangeForm.ExchangeFromCode != null && item.Code.Equals(ExchangeForm.ExchangeFromCode)));
                 }
@@ -33,7 +33,7 @@ namespace CurrencyExchange.Site.Models
             var listItems = new List<SelectListItem>();
             foreach (var item in CurrenciesList)
             {
-                listItems.Add(new SelectListItem(item.Name, 
+                listItems.Add(new SelectListItem($"{item.Name} - {item.Code}", 
                     item.Code, 
                     ExchangeForm.ExchangeToCode != null && item.Code.Equals(ExchangeForm.ExchangeToCode)));
             }
