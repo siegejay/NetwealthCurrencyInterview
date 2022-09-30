@@ -1,8 +1,17 @@
 ﻿namespace CurrencyExchange.Model
 {
+    /// <summary>
+    /// Simple Currency Provider - Designed to be fed a set of predefined currencies that the exchange calculator supports on construction 
+    /// </summary>
     public class BasicCurrencyProvider: ICurrencyProvider
     {
         private readonly List<ICurrency> _currencies;
+
+        /// <summary>
+        /// Construct Provider
+        /// </summary>
+        /// <param name="registeredCurrencies">Set of predefined currency records</param>
+        /// <exception cref="ArgumentException">Exceptions if more than one record has the same code</exception>
         public BasicCurrencyProvider(ICurrency[] registeredCurrencies)
         {
             // Ensure we fail early if any duplicate currency codes registered
@@ -11,7 +20,7 @@
                     .GroupBy(r => r.CurrencyCode, StringComparer.InvariantCultureIgnoreCase)
                     .Where(g => g.Count() > 1)
                     .ToList().Count > 0)
-                throw new ArgumentException("Duplicate curerncy records have been registered", nameof(registeredCurrencies));
+                throw new ArgumentException("Duplicate currency records have been registered", nameof(registeredCurrencies));
 
             _currencies = registeredCurrencies == null? new List<ICurrency>(): registeredCurrencies.ToList();            
         }
@@ -23,7 +32,7 @@
 
         public bool Exists(string isoCurrencyCode)
         {
-            return _currencies.Exists(key => key.CurrencyCode.Equals(isoCurrencyCode, StringComparison.InvariantCultureIgnoreCase));
+            return Lookup(isoCurrencyCode) != null;
         }
 
         public ICurrency? Lookup(string isoCurrencyCode)

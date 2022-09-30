@@ -2,10 +2,10 @@
 
 namespace CurrencyExchange.Service.FakeData.Rate
 {
-    public class UsdToGbpRate : IExchangeRate
+    public class UsdToCnyRate : IExchangeRate
     {
         public string From => "USD";
-        public string To => "GBP";
-        public decimal Rate => 0.90454M;
+        public string To => "CNY";
+        public decimal Rate => 7.12919M;
     }
 }

@@ -27,6 +27,8 @@ Demo Site: https://democurrencyexchangesite.azurewebsites.net
     - Include Unit Tests
     - Build so that interfaces are available to switch out Internal Demo Currency and Exchange Rate providers with another data source (e.g. API, Database, etc.. )
         - Building this way for the demo purpose also allows control of edge cases, such as a pair of Currencies being registered\recognised but no current exchange rate available
+            - Danish Krone (DKK) used to demo missing exchange rates
+        - Limited number of Currencies and thus Rates included as simple demo: code as configuration and auto registration using the Castle Windsor installer features
 - Publish Service and Site to Azure early in development (CD pipelines not required as only a demo) 
 - Include Swagger UI on service for demo and checking purposes
 - Use combination of new (n), to me, frameworks and tools with those I have used in the past, for e.g.
@@ -39,10 +41,13 @@ Demo Site: https://democurrencyexchangesite.azurewebsites.net
 
 ## Follow-ups for investigation and experimentation
 
-- Use of Automapper to map Model Entities in service to DTOs, as opposed to using constructor methods in the DTOs
-- Integration of MediatR into the solution
-- Selenium tests for website 
-- Research alternatives\best practices for the NSwag Client generation 
+- Use of Automapper to map Model Entities in service to DTOs, as opposed to using constructor methods in the DTOs.
+- Integration of MediatR into the solution.
+- Selenium tests for website. 
+- Research alternatives\best practices for the NSwag Client generation. 
+- Add Progressive Enhancement to Site: AJAX call to get ExchangeCard in place of postback.
+- Build an Angular version of the Site.
+- Extend test coverage to include Controllers, View Models, etc...
 
 
 

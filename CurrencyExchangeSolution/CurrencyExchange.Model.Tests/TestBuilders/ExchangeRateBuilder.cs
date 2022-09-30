@@ -1,6 +1,4 @@
-﻿using FakeItEasy;
-
-namespace CurrencyExchange.Model.Tests.TestBuilders
+﻿namespace CurrencyExchange.Model.Tests.TestBuilders
 {
     internal class ExchangeRateBuilder
     {

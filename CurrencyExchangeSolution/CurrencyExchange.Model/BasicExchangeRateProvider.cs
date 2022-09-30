@@ -1,7 +1,8 @@
-﻿using System.Linq;
-
-namespace CurrencyExchange.Model
+﻿namespace CurrencyExchange.Model
 {
+    /// <summary>
+    /// Simple Exchange Rate Provider, which is fed a preselected set of rates on construction
+    /// </summary>
     public class BasicExchangeRateProvider : IExchangeRateProvider
     {
         private readonly List<IExchangeRate> _rates;
@@ -26,27 +27,10 @@ namespace CurrencyExchange.Model
 
         public IExchangeRate? Lookup(ICurrency from, ICurrency to)
         {
-            if (from.CurrencyCode.Equals(to.CurrencyCode)) return new OneToOneExchangeRate(from, to);
-            
-            return _rates.SingleOrDefault(r =>
+             return _rates.SingleOrDefault(r =>
                 r.From.Equals(from.CurrencyCode, StringComparison.InvariantCultureIgnoreCase)
                 && r.To.Equals(to.CurrencyCode, StringComparison.InvariantCultureIgnoreCase)
             );
-        }
-
-        private class OneToOneExchangeRate : IExchangeRate
-        {
-            public OneToOneExchangeRate(ICurrency from, ICurrency to)
-            {
-                From = from.CurrencyCode;
-                To = to.CurrencyCode;
-            }
-
-            public string From { get; }
-
-            public string To { get; }
-
-            public decimal Rate => 1M;
         }
     }
 }

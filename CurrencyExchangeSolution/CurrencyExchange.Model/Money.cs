@@ -8,8 +8,6 @@ namespace CurrencyExchange.Model
     public class Money : IMoney
     {
         protected decimal _value = 0.00M;
-        //protected string _currencyCode; 
-        //protected string _cultureName;
 
         /// <summary>
         /// Constructor: Fully construct 
@@ -29,10 +27,7 @@ namespace CurrencyExchange.Model
         /// <param name="culture">Culture to use to specify currency type</param>
         public Money(decimal value, CultureInfo culture) : this(value, culture.Name) { }
 
-
-        //public CultureInfo Culture { get { return CultureInfo.CreateSpecificCulture(_cultureName); } }
-
-        public string CurrencyCode { get; } // { return new RegionInfo(_cultureName).ISOCurrencySymbol; } }
+        public string CurrencyCode { get; }
 
         public decimal Value { get { return _value; } }
 

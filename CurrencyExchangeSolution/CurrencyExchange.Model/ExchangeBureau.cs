@@ -1,5 +1,8 @@
 ﻿namespace CurrencyExchange.Model
 {
+    /// <summary>
+    /// Currency Exchange Calculator implementation
+    /// </summary>
     public class ExchangeBureau : IExchangeBureau
     {
         private readonly IExchangeRateProvider _rateProvider;
@@ -11,6 +14,17 @@
             _currencyProvider = currencyProvider ?? throw new ArgumentNullException(nameof(currencyProvider));
         }
 
+        /// <summary>
+        /// Exchange the supplied money value to the requested currency type
+        /// </summary>
+        /// <param name="value">Money to be exchanged</param>
+        /// <param name="toIsoCurrency">Currency to exchange to</param>
+        /// <returns>
+        ///     Summary record of the exchange attempt
+        ///     * If currency types for "from" and "to" are known and the appropriate rate exists, the summary includes the new exchanged value and the rate applied
+        ///     * If one or both of the currency types are unknown, the summary has a Null "To" value and a note explaining why exchange could not be calculated
+        ///     * If currency types for "from" and "to" are known but the appropriate rate does not exist, the summary has a Null "To" value and a note explaining why exchange could not be calculated
+        /// </returns>
         public IExchangeSummary Exchange(IMoney value, string toIsoCurrency)
         {
             // Check Currencies are registered
@@ -35,6 +49,9 @@
                 rateCard.Rate);
         }
 
+        /// <summary>
+        /// Exchange Summary record for when one of the currency types is not known
+        /// </summary>
         private class InvalidCurrencyExchangeSummary : IExchangeSummary
         {
             private readonly string _unrecognisedCode;
@@ -51,6 +68,9 @@
             public string Notes => $"The currency code: '{_unrecognisedCode}' is not registered with this exchange bureau";
         }
 
+        /// <summary>
+        /// Exchange Summary record for when no exchange rate exists for the requested conversion
+        /// </summary>
         private class MissingRateExchangeSummary : IExchangeSummary
         {
             private readonly string _toCode;
@@ -67,6 +87,9 @@
             public string Notes => $"This exchange bureau does not currently support exchanges from Currency Code: '{From.CurrencyCode}' to '{_toCode}'";
         }
 
+        /// <summary>
+        /// Exchange Summary record for when the exchange can be successfully completed
+        /// </summary>
         private class CompletedExchangeSummary : IExchangeSummary
         {
             public CompletedExchangeSummary(IMoney from, IMoney to, decimal rateApplied)

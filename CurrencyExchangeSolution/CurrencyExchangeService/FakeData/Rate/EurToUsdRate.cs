@@ -2,10 +2,10 @@
 
 namespace CurrencyExchange.Service.FakeData.Rate
 {
-    public class GbpToUsdRate : IExchangeRate
+    public class EurToUsdRate : IExchangeRate
     {
-        public string From => "GBP";
+        public string From => "EUR";
         public string To => "USD";
-        public decimal Rate => 1.1074M;
+        public decimal Rate => 0.97464M;
     }
 }

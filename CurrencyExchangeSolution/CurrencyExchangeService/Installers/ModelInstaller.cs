@@ -33,10 +33,11 @@ namespace CurrencyExchange.Service.Installers
                     .Configure(c => c.Named(c.Implementation.Name))
             );
 
-            container.Register(Component
-                .For<IExchangeRateProvider>()
-                .ImplementedBy<BasicExchangeRateProvider>()
-                .LifestyleSingleton());
+            container.Register(
+                Component.For<IExchangeRateProvider>().ImplementedBy<SameFromToExchangeRateProviderDecorator>(),
+                Component.For<IExchangeRateProvider>().ImplementedBy<BasicExchangeRateProvider>()
+                .LifestyleSingleton()
+            );
             
             container.Register(Component
                 .For<IExchangeBureau>()
