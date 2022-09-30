@@ -7,7 +7,7 @@ namespace CurrencyExchange.Site
 {
     public class Startup
     {
-        private IConfiguration _configuration { get; }
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration config)
         {
@@ -24,7 +24,7 @@ namespace CurrencyExchange.Site
         {
 
             // Register Service Clients into Services Collection 
-            // TODO: Look at ways to do this in WindsorInstallers
+            // TODO: Look into potential ways to do this in WindsorInstallers
             services.AddHttpClient<ICurrencyExchangeClient, CurrencyExchangeClient>(
                 (provider, client) => {
                     client.BaseAddress = new Uri(_configuration.GetValue("ExchangeService:RootUri", "https://localhost:7061/"));

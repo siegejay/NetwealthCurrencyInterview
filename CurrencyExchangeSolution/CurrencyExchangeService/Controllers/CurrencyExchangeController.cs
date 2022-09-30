@@ -23,7 +23,7 @@ namespace CurrencyExchange.Service.Controllers
         [HttpGet()]
         public IList<CurrencyDTO> GetCurrencyList()
         {
-            var currencyList = _currencyProvider.All().ToList().ConvertAll<CurrencyDTO>(c => new CurrencyDTO(c));
+            var currencyList = _currencyProvider.All().ToList().ConvertAll(c => new CurrencyDTO(c));
             return currencyList;
         }
 

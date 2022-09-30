@@ -4,8 +4,6 @@ namespace CurrencyExchange.Service
     {
         public static void Main(string[] args)
         {
-            //TODO: Clean up and sort out the program\startup split
-
             var builder = WebApplication.CreateBuilder(args);
 
             // Explicitly instantiate the DI Container

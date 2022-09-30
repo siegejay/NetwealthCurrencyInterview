@@ -16,16 +16,6 @@ namespace CurrencyExchange.Service
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
-                       
-
-            //app.UseExceptionHandler(options =>
-            //{
-            //    options.Run(async context =>
-            //    {
-            //        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            //        context.Response.ContentType = "text/html";
-            //    })
-            //})
         }
 
         public void ConfigureServices(IServiceCollection services, IWindsorContainer container)

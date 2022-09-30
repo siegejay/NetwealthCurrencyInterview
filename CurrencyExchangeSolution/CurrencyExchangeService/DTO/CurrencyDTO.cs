@@ -2,9 +2,11 @@
 
 namespace CurrencyExchange.Service.DTO
 {
+    //TODO: Look into potential use of Automapper to do the conversion from Model to DTO, instead of relying on mapppings in constructors
 
-    //TODO: Look into potential use of Automapper to do the conversion from Model to DTO
-
+    /// <summary>
+    /// Service DTO representation of the Currency Type
+    /// </summary>
     public class CurrencyDTO
     {
         public CurrencyDTO(ICurrency currency)
