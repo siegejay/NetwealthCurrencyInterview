@@ -1,7 +1,6 @@
 ﻿using Castle.Windsor.Installer;
 using Castle.Windsor;
 using System.Reflection;
-using System.Net;
 
 namespace CurrencyExchange.Service
 {
@@ -35,7 +34,9 @@ namespace CurrencyExchange.Service
             services.AddControllers();
             // Set up Swagger Services
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(setup =>
+                setup.UseAllOfToExtendReferenceSchemas()   
+            );
 
             // Register all services in installers within this assembly
             container.Install(FromAssembly.Instance(Assembly.GetCallingAssembly()));

@@ -16,33 +16,48 @@ namespace CurrencyExchange.Site.Controllers
             _exchangeService = exchangeService;
         }
 
-        [HttpGet, ActionName("Index"), Route("")]
-        public async Task<IActionResult> Index(string fromCode = "GBP", decimal value = 0M, string toCode = "USD", decimal? exchangedValue = null)
+                [HttpGet, ActionName("Index"), Route("")]
+        public async Task<IActionResult> Index(string fromCode = "GBP", decimal value = 0M, string toCode = "USD", bool includeResult = false)
         {
             // Get list of Currencies
             var currencyList = await _exchangeService.CurrencyAsync();
-            var viewModel = new HomeViewModel(currencyList.ToList());
-            viewModel.ExchangeFromCode = fromCode;
-            viewModel.ExchangeToCode = toCode;
-            viewModel.FromValue = value;
-            viewModel.ToValue = exchangedValue;
+
+            // Check if this is being called on behalf on a new Submission - Redirect from successful Post
+            CurrencyExchangeInputModel? inputModel = new CurrencyExchangeInputModel()
+            {
+                ExchangeFromCode = fromCode,
+                FromValue = value,
+                ExchangeToCode = toCode
+            };
+
+            ExchangeCardDTO? exchangeCard = null;
+            if (includeResult)
+            {
+                // Get Exchange Value from the service
+                exchangeCard = await _exchangeService.ExchangeAsync(fromCode,
+                    (double)value,
+                    toCode);
+            }
+
+            var viewModel = new HomeViewModel(currencyList.ToList(), inputModel, exchangeCard);
             return View(viewModel);
         }
 
+
         [HttpPost, ActionName("Calculate")]
-        public async Task<IActionResult> CalculateExchangeValue(string exchangeFromCode, decimal fromValue, string exchangeToCode)
+        public IActionResult CalculateExchangeValue([Bind(Prefix = "ExchangeForm")] CurrencyExchangeInputModel? inputModel)
         {
-            // Get Exchange Value from the service
-            var exchangeValue = await _exchangeService.ExchangeAsync(exchangeFromCode, (double)fromValue, exchangeToCode);
 
-            // TODO: Handle errors
+            if (inputModel == null) return RedirectToAction("Index");
 
-            return RedirectToAction("Index", new RouteValueDictionary() {
-                {"fromCode", exchangeFromCode },
-                {"toCode", exchangeToCode },
-                {"value", fromValue },
-                {"exchangedValue", exchangeValue.To.Value }
-            });
+            return RedirectToAction("Index", 
+                new RouteValueDictionary() 
+                {
+                    {"fromCode", inputModel.ExchangeFromCode},
+                    {"toCode", inputModel.ExchangeToCode },
+                    {"value", inputModel.FromValue },
+                    {"includeResult", true }
+                });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

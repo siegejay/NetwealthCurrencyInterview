@@ -117,10 +117,22 @@
         "type": "object",
         "properties": {
           "from": {
-            "$ref": "#/components/schemas/MoneyDTO"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MoneyDTO"
+              }
+            ],
+            "nullable": true,
+            "readOnly": true
           },
           "to": {
-            "$ref": "#/components/schemas/MoneyDTO"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MoneyDTO"
+              }
+            ],
+            "nullable": true,
+            "readOnly": true
           },
           "rateApplied": {
             "type": "number",
@@ -145,7 +157,8 @@
           },
           "value": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false

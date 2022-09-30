@@ -10,14 +10,14 @@ namespace CurrencyExchange.Service.DTO
             Value = money.Value;
         }
 
-        public MoneyDTO(string currencyCode, decimal value)
+        public MoneyDTO(string currencyCode, decimal? value)
         {
             CurrencyCode = currencyCode;
             Value = value;
         }
 
         public string CurrencyCode { get; }
-        public decimal Value { get; }
+        public decimal? Value { get; }
 
     }
 }

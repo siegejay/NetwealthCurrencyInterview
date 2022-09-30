@@ -5,37 +5,41 @@ namespace CurrencyExchange.Site.Models
 {
     public class HomeViewModel
     {
-        public HomeViewModel(IList<CurrencyDTO> currenciesSupported)
+        public HomeViewModel(IList<CurrencyDTO> currenciesSupported, CurrencyExchangeInputModel exchangeForm, ExchangeCardDTO? exchangeResult = null)
         {
             CurrenciesList = currenciesSupported;
+            ExchangeForm = exchangeForm;
+            ExchangeResult = exchangeResult;
         }
 
         public IList<CurrencyDTO> CurrenciesList { get;  }
+
+        public CurrencyExchangeInputModel ExchangeForm { get; }
 
         public List<SelectListItem> MakeExchangeFromSelectList() 
         {
                 var listItems = new List<SelectListItem>();
                 foreach(var item in CurrenciesList)
                 {
-                    listItems.Add(new SelectListItem(item.Name, item.Code, ExchangeFromCode != null && item.Code.Equals(ExchangeFromCode)));
+                    listItems.Add(new SelectListItem(item.Name, 
+                        item.Code, 
+                        ExchangeForm.ExchangeFromCode != null && item.Code.Equals(ExchangeForm.ExchangeFromCode)));
                 }
                 return listItems;
         }
-
-        public string? ExchangeFromCode { get; set; }
 
         public List<SelectListItem> MakeExchangeToSelectList()
         {
             var listItems = new List<SelectListItem>();
             foreach (var item in CurrenciesList)
             {
-                listItems.Add(new SelectListItem(item.Name, item.Code, ExchangeToCode != null && item.Code.Equals(ExchangeToCode)));
+                listItems.Add(new SelectListItem(item.Name, 
+                    item.Code, 
+                    ExchangeForm.ExchangeToCode != null && item.Code.Equals(ExchangeForm.ExchangeToCode)));
             }
             return listItems;
         }
 
-        public string? ExchangeToCode { get; set; }
-        public decimal? FromValue { get; set; }
-        public decimal? ToValue { get; set; }
+        public ExchangeCardDTO? ExchangeResult { get; }
     }
 }
