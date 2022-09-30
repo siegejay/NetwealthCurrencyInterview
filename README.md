@@ -1,5 +1,5 @@
-# NetwealthCurrencyInterview
-This project is a Currency Exchange service with Web UI - built for an Interview Test 
+# Netwealth Currency Interview Technical Trial
+This project is a Currency Exchange API with simple Web UI - built for an Interview Test 
 
 # Brief
 
@@ -37,6 +37,9 @@ Demo Site: https://democurrencyexchangesite.azurewebsites.net
     - MSTest
     - Castle Windsor
     - NSwag (Client Service autogenerator) (n)
+- The brief requirements do not state any business rules for the following so they will be ignored but consideration given in the model design where they may fit:
+    - rounding rules, if any, of exchange value
+    - inclusion of exchange fees, if needed
 
 
 ## Follow-ups for investigation and experimentation
