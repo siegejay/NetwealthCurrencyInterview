@@ -15,9 +15,8 @@ namespace CurrencyExchange.Site
 
             var startup = new Startup(builder.Configuration);
             startup.ConfigureServices(builder.Services, container);
-            var app = builder.Build();            
-            startup.Configure(app);
-
+            var app = builder.Build(); 
+            
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -30,6 +29,8 @@ namespace CurrencyExchange.Site
             app.UseStaticFiles();
 
             app.UseAuthorization();
+
+            startup.Configure(app);
 
             app.MapControllerRoute(
                 name: "default",

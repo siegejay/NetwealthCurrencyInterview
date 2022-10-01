@@ -16,7 +16,7 @@ namespace CurrencyExchange.Site.Controllers
             _exchangeService = exchangeService;
         }
 
-                [HttpGet, ActionName("Index"), Route("")]
+        [HttpGet, ActionName("Index"), Route("")]
         public async Task<IActionResult> Index(string fromCode = "GBP", decimal value = 0M, string toCode = "USD", bool includeResult = false)
         {
             // Get list of Currencies
@@ -40,7 +40,7 @@ namespace CurrencyExchange.Site.Controllers
             }
 
             var viewModel = new HomeViewModel(currencyList.ToList(), inputModel, exchangeCard);
-            return View(viewModel);
+            return View(viewModel);         
         }
 
 
@@ -60,6 +60,7 @@ namespace CurrencyExchange.Site.Controllers
                 });
         }
 
+        [Route("home/error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
