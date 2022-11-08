@@ -14,11 +14,13 @@ namespace CurrencyExchange.Service
 
             // Register Services
             var startup = new Startup();
-            startup.ConfigureServices(builder.Services, container);
+            startup.ConfigureServices(builder.Services, container, builder.Configuration);
             var app = builder.Build();
             startup.Configure(app);
 
             app.UseHttpsRedirection();
+            app.MapMethods("/api/heartbeat", new[] { "HEAD" }, () => Results.Ok());
+
             app.Run();
         }
     }

@@ -12,13 +12,17 @@ namespace CurrencyExchange.Service
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            // Set up Attribute Based Routing
-            app.UseRouting();
+            app.UseHttpsRedirection();
+            
+            app.UseRouting();// Set up Attribute Based Routing
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            app.UseCors("AngularPolicy");
+
+            app.UseEndpoints(endpoints => endpoints.MapControllers());            
         }
 
-        public void ConfigureServices(IServiceCollection services, IWindsorContainer container)
+        public void ConfigureServices(IServiceCollection services, IWindsorContainer container, ConfigurationManager config)
         {
             // Register Controllers
             services.AddControllers();
@@ -27,6 +31,13 @@ namespace CurrencyExchange.Service
             services.AddSwaggerGen(setup =>
                 setup.UseAllOfToExtendReferenceSchemas()   
             );
+
+            services.AddCors(options => options.AddPolicy(name: "AngularPolicy", cfg =>
+            {
+                cfg.AllowAnyHeader();
+                cfg.AllowAnyMethod();
+                cfg.WithOrigins(config["AllowedCORS"]);
+            }));
 
             // Register all services in installers within this assembly
             container.Install(FromAssembly.Instance(Assembly.GetCallingAssembly()));

@@ -31,7 +31,7 @@ Demo Site: https://democurrencyexchangesite.azurewebsites.net
         - Limited number of Currencies and thus Rates included as simple demo: code as configuration and auto registration using the Castle Windsor installer features
 - Publish Service and Site to Azure early in development (CD pipelines not required as only a demo) 
 - Include Swagger UI on service for demo and checking purposes
-- Use combination of new (n), to me, frameworks and tools with those I have used in the past, for e.g.
+- Use combination of new (n) to me, frameworks and tools with those I have used in the past, for e.g.
     - ASP.Net Core MVC (n)
     - FakeItEasy
     - MSTest

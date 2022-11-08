@@ -1,0 +1,57 @@
+<div class="currency-exchange-form">
+  <h1>{{title}}</h1>
+  <form [formGroup]="form">
+
+    <!--From Currency -->
+    <mat-form-field *ngIf="currencies | async as result">
+      <mat-label>Select a Currency...</mat-label>
+      <mat-select id="from" formControlName="from">
+        <mat-option *ngFor="let currency of result" [value]="currency.code">
+          {{currency.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Value -->
+    <mat-form-field>
+      <mat-label>From Value:</mat-label>
+      <input matInput formControlName="value" required placeholder="Insert Value" />
+      <!--<mat-error *ngFor="let error of getErrors(form.get('lon')!,
+                 'Longitude',
+                 { 'pattern': 'requires a positive or negative number with 0-4 decimal values.'})">
+        {error}}
+      </mat-error>-->
+    </mat-form-field>
+
+    <!--To Currency -->
+    <mat-form-field *ngIf="currencies | async as result">
+      <mat-label>Select a Currency...</mat-label>
+      <mat-select id="to" formControlName="to">
+        <mat-option *ngFor="let currency of result" [value]="currency.code">
+          {{currency.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <button mat-flat-button color="primary" type="button" (click)="exchangeValue()">
+        Calculate
+      </button>
+    </div>
+  </form>
+
+  <hr />
+
+  <div class="result" *ngIf="exchangeResult">
+    <div class="result-header">
+      <p class="result-label">
+        Exchange Result:
+      </p>
+    </div>
+    <div class="result-body">
+      <p class="result-value" *ngIf="exchangeResult.to">{{exchangeResult.to.currencyCode}} {{exchangeResult.to.value}}</p>
+      <p class="result-error" *ngIf="exchangeResult.notes">{{exchangeResult.notes}}</p>
+    </div>
+  </div>
+
+  </div>
