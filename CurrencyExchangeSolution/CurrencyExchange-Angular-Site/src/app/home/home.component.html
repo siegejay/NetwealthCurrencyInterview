@@ -4,37 +4,43 @@
 
     <!--From Currency -->
     <mat-form-field *ngIf="currencies | async as result">
-      <mat-label>Select a Currency...</mat-label>
+      <mat-label>Convert From</mat-label>
       <mat-select id="from" formControlName="from">
         <mat-option *ngFor="let currency of result" [value]="currency.code">
           {{currency.name}}
         </mat-option>
       </mat-select>
+      <mat-error *ngFor="let error of getErrors(form.get('from')!, 'From')">
+        {{error}}
+      </mat-error>
     </mat-form-field>
 
     <!-- Value -->
     <mat-form-field>
-      <mat-label>From Value:</mat-label>
-      <input matInput formControlName="value" required placeholder="Insert Value" />
-      <!--<mat-error *ngFor="let error of getErrors(form.get('lon')!,
-                 'Longitude',
-                 { 'pattern': 'requires a positive or negative number with 0-4 decimal values.'})">
-        {error}}
-      </mat-error>-->
+      <!--<mat-label>From Value:</mat-label>-->
+      <input matInput formControlName="value" required placeholder="Insert Value" type="number" />
+      <mat-error *ngFor="let error of getErrors(form.get('value')!,
+                 'From Value',
+                 { 'pattern': 'requires a positive or negative number with 0-2 decimal values.'})">
+        {{error}}
+      </mat-error>
     </mat-form-field>
 
     <!--To Currency -->
     <mat-form-field *ngIf="currencies | async as result">
-      <mat-label>Select a Currency...</mat-label>
+      <mat-label>Convert To</mat-label>
       <mat-select id="to" formControlName="to">
         <mat-option *ngFor="let currency of result" [value]="currency.code">
           {{currency.name}}
         </mat-option>
       </mat-select>
+      <mat-error *ngFor="let error of getErrors(form.get('to')!, 'To')">
+        {{error}}
+      </mat-error>
     </mat-form-field>
 
     <div>
-      <button mat-flat-button color="primary" type="button" (click)="exchangeValue()">
+      <button mat-flat-button color="primary" type="button" [disabled]="!form.valid" (click)="exchangeValue()">
         Calculate
       </button>
     </div>
